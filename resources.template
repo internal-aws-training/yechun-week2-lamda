@@ -1,0 +1,20 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "sycHello": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": "sycHelloWorld",
+        "Handler": "index.handler",
+        "Role": "arn:aws:iam::494526681395:role/for-aws-training",
+        "Code": {
+          "S3Bucket": "syc-lambda-functions",
+          "S3Key": "index.js.zip"
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 60
+      }
+    }
+  }
+}
+

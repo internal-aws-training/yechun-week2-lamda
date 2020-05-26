@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd $(dirname $0)/..
+
+source ./auto/set-env
+
+zip function.zip index.js
+
+aws lambda create-function --function-name ${LAMBDA_FUNCTION_NAME} \
+  --zip-file fileb://function.zip --handler index.handler --runtime nodejs12.x \
+  --region "ap-southeast-1" \
+  --role arn:aws:iam::494526681395:role/for-aws-training
+
+aws lambda invoke --function-name syc-lamda out --log-type Tail --region "ap-southeast-1"

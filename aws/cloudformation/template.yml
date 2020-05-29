@@ -1,0 +1,35 @@
+Description: SYC lambda
+Parameters:
+  LambdaFunctionName: 
+    Type: String
+    Default: syc-copy-file-function
+
+Resources:
+  ReadFileLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: syc-copy-file-function
+      Handler: index.handler
+      Role: !GetAtt InvokeLambdaRole.Arn
+      Code: 
+        S3Bucket: syc-lambda-functions
+        S3Key: function.zip
+      Runtime: nodejs12.x
+      Role: arn:aws:iam::494526681395:role/for-aws-training
+
+  SycImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: syc-image-bucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: s3:ObjectCreated:*
+            Function: !GetAtt ReadFileLambda.Arn
+
+  LambdaInvokeRole:
+    Type: AWS::Lambda::Permission
+    Properties: 
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt ReadFileLambda.Arn
+      Principal: s3.amazonaws.com 
+    

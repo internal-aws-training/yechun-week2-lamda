@@ -1,10 +1,10 @@
 {
-  "AWSTemplateFormatVersion": "2010-09-09",
+  "AWSTemplateFormatVersion": "2020-05-24",
   "Resources": {
-    "sycHello": {
+    "sycLambda": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
-        "FunctionName": "sycHelloWorld",
+        "FunctionName": "sycLambda",
         "Handler": "index.handler",
         "Role": "arn:aws:iam::494526681395:role/for-aws-training",
         "Code": {
